@@ -1,5 +1,7 @@
 package ru.nsu.gordin.commands;
 
+import ru.nsu.gordin.Model;
+
 import java.util.Scanner;
 
 /**
@@ -32,6 +34,8 @@ public class Teleport {
         {
             System.out.println("Too many parametres, must be: TELEPORT <x> <y>");
         }
+
+        Model.set(x, y);
 
     }
 }

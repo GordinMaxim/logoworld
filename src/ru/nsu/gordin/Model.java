@@ -94,5 +94,10 @@ public class Model {
         return field;
     }
 
+    static public void set(int x1, int y1)
+    {
+        x = x1;
+        y = y1;
+    }
 
 }

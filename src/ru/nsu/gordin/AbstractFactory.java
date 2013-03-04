@@ -38,7 +38,7 @@ public class AbstractFactory {
     static public Object create(String key) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         if(!paths.containsKey(key))
         {
-            throw new ClassNotFoundException(key);
+//            throw new ClassNotFoundException(key);
         }
         if(!creators.containsKey(key))
         {
