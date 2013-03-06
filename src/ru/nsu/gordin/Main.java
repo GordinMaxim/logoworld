@@ -10,11 +10,11 @@ package ru.nsu.gordin;
 import java.io.*;
 
 public class Main {
-    public static void main(String argc[])
+    public static void main(String[] args)
     {
         try
         {
-            AbstractFactory.init(argc[1]);
+            AbstractFactory.init(args[0]);
             Controller.run();
         }
         catch (ClassNotFoundException e)
@@ -33,5 +33,9 @@ public class Main {
         {
             System.out.println(e.getMessage());
         }
+//        catch(Exception e)
+//        {
+//            System.out.println(e.getMessage());
+//        }
     }
 }

@@ -61,28 +61,28 @@ public class Model {
         }
         if(0 == direction.compareTo("L"))
         {
-            x--;
-            if(0 > x)
+            y--;
+            if(0 > y)
             {
-                x += field[0].length;
+                y += field[0].length;
             }
         }
         else if(0 == direction.compareTo("R"))
         {
-            x++;
-            x %= field[0].length;
+            y++;
+            y %= field[0].length;
         }
         else if(0 == direction.compareTo("U"))
         {
-            y--;
-            if(0 > y)
+            x--;
+            if(0 > x)
             {
-                y += field.length ;
+                x += field.length ;
             }
         }
         else if(0 == direction.compareTo("D"))
         {
-            y++;
+            x++;
             x %= field.length;
         }
         field[x][y] = 'X';
@@ -96,8 +96,10 @@ public class Model {
 
     static public void set(int x1, int y1)
     {
+        field[x][y] = '.';
         x = x1;
         y = y1;
+        field[x][y] = 'X';
     }
 
 }

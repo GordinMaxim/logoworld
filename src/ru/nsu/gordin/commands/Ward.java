@@ -9,7 +9,7 @@ import ru.nsu.gordin.Model;
  * Time: 8:56 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Ward {
+public class Ward implements Command{
     public void action(String parametres)
     {
         if(!parametres.isEmpty())

@@ -11,7 +11,7 @@ import java.util.Scanner;
  * Time: 10:17 AM
  * To change this template use File | Settings | File Templates.
  */
-public class Teleport {
+public class Teleport implements Command{
     public void action(String parametres)
     {
         int x = 0;

@@ -1,5 +1,7 @@
 package ru.nsu.gordin;
 
+import ru.nsu.gordin.commands.Command;
+
 import java.io.*;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -35,17 +37,17 @@ public class AbstractFactory {
         }
     }
 
-    static public Object create(String key) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    static public Command create(String key) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         if(!paths.containsKey(key))
         {
-//            throw new ClassNotFoundException(key);
+            throw new ClassNotFoundException(key);
         }
         if(!creators.containsKey(key))
         {
             creators.put(key, Class.forName(paths.get(key)));
         }
 
-        return creators.get(key).newInstance();
+        return (Command)creators.get(key).newInstance();
     }
 
 

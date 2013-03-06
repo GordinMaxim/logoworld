@@ -13,7 +13,7 @@ public class Viewer {
 
         for(int i = 0; i < field.length; i++)
         {
-            System.out.print(field[i]);
+            System.out.println(field[i]);
         }
     }
 

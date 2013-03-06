@@ -2,6 +2,9 @@ package ru.nsu.gordin;
 
 import ru.nsu.gordin.commands.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 /**
@@ -13,17 +16,18 @@ import java.util.Scanner;
  */
 public class Controller {
     static boolean firstRun = true;
-    static void run() throws InstantiationException, ClassNotFoundException, IllegalAccessException
-    {
-        Scanner scanner = new Scanner(System.in);
-        String s;
+    static void run() throws InstantiationException, ClassNotFoundException, IllegalAccessException, IOException {
+        BufferedReader bufReader = new BufferedReader(new InputStreamReader(System.in));
+
         while(true)
         {
-
-            s = scanner.next();
+            String s = bufReader.readLine();
+            s = s + ' ';
+            String sub = s.substring(0, s.indexOf(' '));
+            String param = s.substring(s.indexOf(' ') + 1);
             if(firstRun)
             {
-                if(0 == s.compareTo("INIT"))
+                if(0 == sub.compareTo("INIT"))
                 {
                     firstRun = false;
                 }
@@ -33,42 +37,38 @@ public class Controller {
                     continue;
                 }
             }
-            Object obj = AbstractFactory.create(s);
-            StringBuilder sb = new StringBuilder();
-            while(scanner.hasNext())
-            {
-                sb.append(scanner.next() + " ");
-            }
+            Command fun = AbstractFactory.create(sub);
+            fun.action(param);
 
-            if(obj instanceof Init)
-            {
-                Init fun = (Init)obj;
-                fun.action(sb.toString());
-            }
-            else if(obj instanceof Move)
-            {
-                Move fun = (Move)obj;
-                fun.action(sb.toString());
-            }
-            else if(obj instanceof Teleport)
-            {
-                Teleport fun = (Teleport)obj;
-                fun.action(sb.toString());
-            }
-            else if(obj instanceof Ward)
-            {
-                Ward fun = (Ward)obj;
-                fun.action(sb.toString());
-            }
-            else if(obj instanceof Draw)
-            {
-                Draw fun = (Draw)obj;
-                fun.action(sb.toString());
-            }
-            else
-            {
-                System.out.println("Unknown command");
-            }
+//            if(obj instanceof Init)
+//            {
+//                Init fun = (Init)obj;
+//                fun.action(param);
+//            }
+//            else if(obj instanceof Move)
+//            {
+//                Move fun = (Move)obj;
+//                fun.action(param);
+//            }
+//            else if(obj instanceof Teleport)
+//            {
+//                Teleport fun = (Teleport)obj;
+//                fun.action(param);
+//            }
+//            else if(obj instanceof Ward)
+//            {
+//                Ward fun = (Ward)obj;
+//                fun.action(param);
+//            }
+//            else if(obj instanceof Draw)
+//            {
+//                Draw fun = (Draw)obj;
+//                fun.action(param);
+//            }
+//            else
+//            {
+//                System.out.println("Unknown command");
+//            }
 
             Viewer.print(Model.getField());
 

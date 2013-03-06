@@ -11,7 +11,7 @@ import java.util.Scanner;
  * Time: 8:56 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Init {
+public class Init implements Command{
     public void action(String parametres)
     {
         int x = 0;
