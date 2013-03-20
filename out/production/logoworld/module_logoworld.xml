@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_logoworld" default="compile.module.logoworld">
+  <dirname property="module.logoworld.basedir" file="${ant.file.module_logoworld}"/>
+  
+  <property name="module.jdk.home.logoworld" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.logoworld" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.logoworld" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.logoworld" value="${compiler.args}"/>
+  
+  <property name="logoworld.output.dir" value="${module.logoworld.basedir}/out/production/logoworld"/>
+  <property name="logoworld.testoutput.dir" value="${module.logoworld.basedir}/out/test/logoworld"/>
+  
+  <path id="logoworld.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="logoworld.module.production.classpath">
+    <path refid="${module.jdk.classpath.logoworld}"/>
+    <path refid="library.log4j:log4j:1.2.16.classpath"/>
+    <path refid="library.junit:junit:4.9.classpath"/>
+  </path>
+  
+  <path id="logoworld.runtime.production.module.classpath">
+    <pathelement location="${logoworld.output.dir}"/>
+    <path refid="library.log4j:log4j:1.2.16.classpath"/>
+    <path refid="library.junit:junit:4.9.classpath"/>
+  </path>
+  
+  <path id="logoworld.module.classpath">
+    <path refid="${module.jdk.classpath.logoworld}"/>
+    <pathelement location="${logoworld.output.dir}"/>
+    <path refid="library.log4j:log4j:1.2.16.classpath"/>
+    <pathelement location="${idea.home}/lib/junit.jar"/>
+    <path refid="library.junit:junit:4.9.classpath"/>
+  </path>
+  
+  <path id="logoworld.runtime.module.classpath">
+    <pathelement location="${logoworld.testoutput.dir}"/>
+    <pathelement location="${logoworld.output.dir}"/>
+    <path refid="library.log4j:log4j:1.2.16.classpath"/>
+    <pathelement location="${idea.home}/lib/junit.jar"/>
+    <path refid="library.junit:junit:4.9.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.logoworld">
+    <patternset refid="ignored.files"/>
+    <exclude name="out/**"/>
+    <exclude name="out/test/**"/>
+    <exclude name="out/test/logoworld/**"/>
+    <exclude name="out/production/**"/>
+    <exclude name="out/production/logoworld/**"/>
+    <exclude name="out/production/logoworld/ru/**"/>
+    <exclude name="out/production/logoworld/ru/nsu/**"/>
+    <exclude name="out/production/logoworld/ru/nsu/gordin/**"/>
+    <exclude name="out/production/logoworld/ru/nsu/gordin/commands/**"/>
+    <exclude name="out/production/logoworld/ru/nsu/gordin/commands/.idea/**"/>
+    <exclude name="out/production/logoworld/ru/nsu/gordin/commands/.idea/copyright/**"/>
+    <exclude name="out/production/logoworld/ru/nsu/gordin/commands/.idea/scopes/**"/>
+    <exclude name="out/production/logoworld/.idea/**"/>
+    <exclude name="out/production/logoworld/.idea/copyright/**"/>
+    <exclude name="out/production/logoworld/.idea/scopes/**"/>
+    <exclude name="out/production/logoworld/src/**"/>
+    <exclude name="out/production/logoworld/src/ru/**"/>
+    <exclude name="out/production/logoworld/src/ru/nsu/**"/>
+    <exclude name="out/production/logoworld/src/ru/nsu/gordin/**"/>
+    <exclude name="out/production/logoworld/src/ru/nsu/gordin/commands/**"/>
+    <exclude name="out/production/logoworld/src/ru/nsu/gordin/commands/.idea/**"/>
+    <exclude name="out/production/logoworld/src/ru/nsu/gordin/commands/.idea/copyright/**"/>
+    <exclude name="out/production/logoworld/src/ru/nsu/gordin/commands/.idea/scopes/**"/>
+    <exclude name="out/production/logoworld/docs/**"/>
+    <exclude name="out/production/logoworld/docs/index-files/**"/>
+    <exclude name="out/production/logoworld/docs/resources/**"/>
+    <exclude name="out/production/logoworld/docs/ru/**"/>
+    <exclude name="out/production/logoworld/docs/ru/nsu/**"/>
+    <exclude name="out/production/logoworld/docs/ru/nsu/gordin/**"/>
+    <exclude name="out/production/logoworld/docs/ru/nsu/gordin/commands/**"/>
+    <exclude name="out/production/logoworld/dist/**"/>
+    <exclude name="out/production/logoworld/dist/lib/**"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.logoworld">
+    <patternset refid="excluded.from.module.logoworld"/>
+  </patternset>
+  
+  <path id="logoworld.module.sourcepath">
+    <dirset dir="${module.logoworld.basedir}/../../IdeaProjects">
+      <include name="logoworld/src"/>
+      <include name="logoworld"/>
+    </dirset>
+  </path>
+  
+  <path id="logoworld.module.test.sourcepath">
+    <dirset dir="${module.logoworld.basedir}/../../IdeaProjects">
+      <include name="logoworld/test"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.logoworld" depends="compile.module.logoworld.production,compile.module.logoworld.tests" description="Compile module logoworld"/>
+  
+  <target name="compile.module.logoworld.production" depends="register.custom.compilers" description="Compile module logoworld; production classes">
+    <mkdir dir="${logoworld.output.dir}"/>
+    <javac2 destdir="${logoworld.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.logoworld}/javac">
+      <compilerarg line="${compiler.args.logoworld}"/>
+      <bootclasspath refid="logoworld.module.bootclasspath"/>
+      <classpath refid="logoworld.module.production.classpath"/>
+      <src refid="logoworld.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.logoworld"/>
+    </javac2>
+    
+    <copy todir="${logoworld.output.dir}">
+      <fileset dir="${module.logoworld.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.logoworld.basedir}">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.logoworld.tests" depends="register.custom.compilers,compile.module.logoworld.production" description="compile module logoworld; test classes" unless="skip.tests">
+    <mkdir dir="${logoworld.testoutput.dir}"/>
+    <javac2 destdir="${logoworld.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.logoworld}/javac">
+      <compilerarg line="${compiler.args.logoworld}"/>
+      <bootclasspath refid="logoworld.module.bootclasspath"/>
+      <classpath refid="logoworld.module.classpath"/>
+      <src refid="logoworld.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.logoworld"/>
+    </javac2>
+    
+    <copy todir="${logoworld.testoutput.dir}">
+      <fileset dir="${module.logoworld.basedir}/test">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.logoworld" description="cleanup module">
+    <delete dir="${logoworld.output.dir}"/>
+    <delete dir="${logoworld.testoutput.dir}"/>
+  </target>
+</project>
