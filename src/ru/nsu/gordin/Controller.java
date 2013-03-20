@@ -1,11 +1,13 @@
 package ru.nsu.gordin;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import ru.nsu.gordin.commands.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,10 +16,46 @@ import java.util.Scanner;
  * Time: 12:56 PM
  * To change this template use File | Settings | File Templates.
  */
+
+/**
+ * Controller class which implement controller from MVC pattern
+ *
+ * @author Gordin Maxim
+ * @version 0.9
+ */
 public class Controller {
-    static boolean firstRun = true;
-    static void run() throws InstantiationException, ClassNotFoundException, IllegalAccessException, IOException {
+    private boolean firstRun = true;
+    private AbstractFactory factory = null;
+    static private Logger log = null;
+    static
+    {
+        PropertyConfigurator.configure("log4j.properties");
+        log = Logger.getLogger(Controller.class);
+    }
+    /**
+     * method which run all game
+     *
+     * @param fact reference to a abstract factory
+     * @param viewer reference to a Viewer
+     * @throws InstantiationException
+     * @throws ClassNotFoundException
+     * @throws IllegalAccessException
+     * @throws IOException
+     */
+    void run(AbstractFactory fact, Viewer viewer) throws Exception {
+        log.debug("void Controller.run(Abstract factory fact = "+fact+", Viewer viewer = "+viewer+")");
+        factory = fact;
+        Model model = new Model();
         BufferedReader bufReader = new BufferedReader(new InputStreamReader(System.in));
+
+        if(null == fact)
+        {
+            throw new Exception("fact == null");
+        }
+        if(null == viewer)
+        {
+            throw new Exception("viewer == null");
+        }
 
         while(true)
         {
@@ -33,44 +71,22 @@ public class Controller {
                 }
                 else
                 {
-                    System.out.println("Not initialized, try again");
+                    viewer.printMessage("Not initialized, try again");
+//                    System.out.println("Not initialized, try again");
                     continue;
                 }
             }
-            Command fun = AbstractFactory.create(sub);
-            fun.action(param);
+            Command fun = factory.create(sub);
+            if(null == fun)
+            {
+                viewer.printMessage("command not found");
+                continue;
+            }
+            fun.action(param, viewer, model);
 
-//            if(obj instanceof Init)
-//            {
-//                Init fun = (Init)obj;
-//                fun.action(param);
-//            }
-//            else if(obj instanceof Move)
-//            {
-//                Move fun = (Move)obj;
-//                fun.action(param);
-//            }
-//            else if(obj instanceof Teleport)
-//            {
-//                Teleport fun = (Teleport)obj;
-//                fun.action(param);
-//            }
-//            else if(obj instanceof Ward)
-//            {
-//                Ward fun = (Ward)obj;
-//                fun.action(param);
-//            }
-//            else if(obj instanceof Draw)
-//            {
-//                Draw fun = (Draw)obj;
-//                fun.action(param);
-//            }
-//            else
-//            {
-//                System.out.println("Unknown command");
-//            }
 
-            Viewer.print(Model.getField());
+
+            viewer.print(model);
 
         }
     }

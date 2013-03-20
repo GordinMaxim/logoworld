@@ -11,8 +11,24 @@ import java.util.Scanner;
  * Time: 8:56 PM
  * To change this template use File | Settings | File Templates.
  */
+import ru.nsu.gordin.Viewer;
+
+/**
+ * This class implement interface Command and execute a user command INIT
+ *
+ * @author Gordin Maxim
+ * @version 0.9
+ */
 public class Init implements Command{
-    public void action(String parametres)
+    /**
+     * initialize user field
+     *
+     * @param parametres string which looks like "<width> <heigth> <x> <y>"
+     * @param viewer specimen of class Viewer
+     * @param model specimen of class Model
+     */
+    @Override
+    public void action(String parametres, Viewer viewer, Model model)
     {
         int x = 0;
         int y = 0;
@@ -30,21 +46,22 @@ public class Init implements Command{
         }
         if(scanner.hasNextInt())
         {
-            x = scanner.nextInt();
+            x = scanner.nextInt() % heigth;
         }
         if(scanner.hasNextInt())
         {
-            y = scanner.nextInt();
+            y = scanner.nextInt() % width;
         }
 
         if(scanner.hasNext())
         {
-            System.out.println("Too many parametres, must be: \" INIT <width> <heigth> <x> <y>\" ");
+            viewer.printMessage("Use: \" INIT <width> <heigth> <x> <y>\" ");
+//            System.out.println("Too many parametres, must be: \" INIT <width> <heigth> <x> <y>\" ");
             return;
         }
         else
         {
-            Model.init(width, heigth, x, y);
+            model.init(width, heigth, x, y);
         }
 
     }

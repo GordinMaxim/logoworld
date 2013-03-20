@@ -1,6 +1,7 @@
 package ru.nsu.gordin.commands;
 
 import ru.nsu.gordin.Model;
+import ru.nsu.gordin.Viewer;
 
 import java.util.Scanner;
 
@@ -11,8 +12,23 @@ import java.util.Scanner;
  * Time: 10:17 AM
  * To change this template use File | Settings | File Templates.
  */
+
+/**
+ * This class implement interface Command and execute a user command TELEPORT
+ *
+ * @author Gordin Maxim
+ * @version 0.9
+ */
 public class Teleport implements Command{
-    public void action(String parametres)
+    /**
+     * teleport player on new position
+     *
+     * @param parametres string "<x> <y>"
+     * @param viewer specimen of class Viewer
+     * @param model specimen of class Model
+     */
+    @Override
+    public void action(String parametres, Viewer viewer, Model model)
     {
         int x = 0;
         int y = 0;
@@ -32,10 +48,10 @@ public class Teleport implements Command{
 
         if(scanner.hasNext())
         {
-            System.out.println("Too many parametres, must be: TELEPORT <x> <y>");
+            viewer.printMessage("Use: TELEPORT <x> <y>");
         }
 
-        Model.set(x, y);
+        model.set(x, y);
 
     }
 }

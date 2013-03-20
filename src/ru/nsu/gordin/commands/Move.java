@@ -11,8 +11,24 @@ import java.util.Scanner;
  * Time: 8:56 PM
  * To change this template use File | Settings | File Templates.
  */
+import ru.nsu.gordin.Viewer;
+
+/**
+ * This class implement interface Command and execute a user command MOVE
+ *
+ * @author Gordin Maxim
+ * @version 0.9
+ */
 public class Move implements Command{
-    public void action(String parametres)
+    /**
+     * move player position
+     *
+     * @param parametres string which looks like "[L|R|U|D] [0-9]"
+     * @param viewer specimen of class Viewer
+     * @param model specimen of class Model
+     */
+    @Override
+    public void action(String parametres, Viewer viewer, Model model)
     {
         int steps = 0;
         String direction = null;
@@ -22,9 +38,10 @@ public class Move implements Command{
         if(scanner.hasNext())
         {
             direction = scanner.next();
-            if(1 != direction.length())
+            if(1 != direction.length() || !(new String("LRUD").contains(direction)))
             {
-                System.out.println("Must be one of [L|R|U|D]");
+                viewer.printMessage("Must be one of [L|R|U|D]");
+//                System.out.println("Must be one of [L|R|U|D]");
             }
         }
         if(scanner.hasNextInt())
@@ -34,14 +51,15 @@ public class Move implements Command{
 
         if(scanner.hasNext())
         {
-            System.out.println("Too many parametres, must be: \" MOVE [L|R|U|D] <steps>\" ");
+            viewer.printMessage("Use: \" MOVE [L|R|U|D] <steps>\" ");
+//            System.out.println("Too many parametres, must be: \" MOVE [L|R|U|D] <steps>\" ");
             return;
         }
         else
         {
             while(steps > 0)
             {
-                Model.step(direction);
+                model.step(direction);
                 steps--;
             }
         }
