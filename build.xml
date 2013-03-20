@@ -1,0 +1,44 @@
+<project name="logoworld" default="dist" basedir=".">
+    <description>
+        simple example build file
+    </description>
+    <!-- set global properties for this build -->
+    <property name="src" location="${basedir}/src"/>
+    <property name="test" location="${basedir}/test"/>
+    <property name="build" location="${basedir}/build"/>
+    <property name="dist"  location="${basedir}/dist"/>
+    <property name="lib"  location="${basedir}/lib"/>
+
+    <target name="init" depends="clean">
+        <!-- Create the time stamp -->
+        <tstamp/>
+        <!-- Create the build directory structure used by compile -->
+        <mkdir dir="${build}"/>
+        <mkdir dir="${build}/production"/>
+        <mkdir dir="${build}/test"/>
+
+    </target>
+
+    <target name="compile" depends="init"
+            description="compile the source " >
+        <!-- Compile the java code from ${src} into ${build} -->
+        <javac srcdir="${src}" destdir="${build}/production" debug="true" classpath="${lib}/log4j-1.2.16.jar:${lib}hamcrest-core-1.1.jar:${lib}junit-4.9.jar"/>
+        <!--<javac srcdir="${test}" destdir="${build}/test" debug="true" classpath="${lib}/junit-4.9.jar"/>-->
+    </target>
+
+    <target name="dist" depends="compile"
+            description="generate the distribution" >
+        <!-- Create the distribution directory -->
+        <mkdir dir="${dist}/lib"/>
+
+        <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+        <jar jarfile="${dist}/lib/MyProject-${DSTAMP}.jar" basedir="${build}" manifest="${src}/MANIFEST.MF"/>
+    </target>
+
+    <target name="clean"
+            description="clean up" >
+        <!-- Delete the ${build} and ${dist} directory trees -->
+        <delete dir="${build}"/>
+        <delete dir="${dist}"/>
+    </target>
+</project>
