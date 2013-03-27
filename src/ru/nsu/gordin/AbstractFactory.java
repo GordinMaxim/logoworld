@@ -27,12 +27,7 @@ import java.util.Properties;
 public class AbstractFactory {
     private Map<String, String> paths = new HashMap<>();
     private Map<String, Class> creators = new HashMap<>();
-    static private Logger log = null;
-    static
-    {
-        PropertyConfigurator.configure("log4j.properties");
-        log = Logger.getLogger(AbstractFactory.class);
-    }
+    static private Logger log = Logger.getLogger(AbstractFactory.class);
     /**
      * Initialized factory with settings in fileName
      *
@@ -42,12 +37,11 @@ public class AbstractFactory {
     public void init(String fileName) throws IOException {
 
         log.debug("void AbstractFactory.init(String filename = "+fileName+")");
-        InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream(fileName);
+        InputStream stream = getClass().getResourceAsStream(fileName);
         if(null == stream)
         {
             throw new FileNotFoundException(fileName);
         }
-
         Properties prop = new Properties();
         prop.load(stream);
         Enumeration<?> keyList = prop.propertyNames();

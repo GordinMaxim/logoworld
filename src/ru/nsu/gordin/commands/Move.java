@@ -1,5 +1,6 @@
 package ru.nsu.gordin.commands;
 
+import ru.nsu.gordin.CommandTypes;
 import ru.nsu.gordin.Model;
 
 import java.util.Scanner;
@@ -38,8 +39,9 @@ public class Move implements Command{
         if(scanner.hasNext())
         {
             direction = scanner.next();
-            if(1 != direction.length() || !(new String("LRUD").contains(direction)))
+            if(1 != direction.length() || !("LRUD".contains(direction)))
             {
+               // CommandTypes.valueOf(direction)
                 viewer.printMessage("Must be one of [L|R|U|D]");
 //                System.out.println("Must be one of [L|R|U|D]");
             }

@@ -18,16 +18,11 @@ import ru.nsu.gordin.Model;
  * @version 0.9
  */
 public class Viewer {
-    static private Logger log = null;
-    static
-    {
-        PropertyConfigurator.configure("log4j.properties");
-        log = Logger.getLogger(Viewer.class);
-    }
+    static private Logger log = Logger.getLogger(Viewer.class);
     /**
      * print message on the screen
      *
-     * @param message
+     * @param message print message
      */
     public void printMessage(String message)
     {

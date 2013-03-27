@@ -23,9 +23,9 @@ public interface Command {
     /**
      * prototype of command execution
      *
-     * @param parametres
-     * @param viewer
-     * @param model
+     * @param parametres command parametres
+     * @param viewer MVC viewer
+     * @param model MVC model
      */
     void action(String parametres, Viewer viewer, Model model);
 }

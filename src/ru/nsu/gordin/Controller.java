@@ -26,12 +26,7 @@ import java.io.InputStreamReader;
 public class Controller {
     private boolean firstRun = true;
     private AbstractFactory factory = null;
-    static private Logger log = null;
-    static
-    {
-        PropertyConfigurator.configure("log4j.properties");
-        log = Logger.getLogger(Controller.class);
-    }
+    static private Logger log = Logger.getLogger(Controller.class);
     /**
      * method which run all game
      *
@@ -65,7 +60,7 @@ public class Controller {
             String param = s.substring(s.indexOf(' ') + 1);
             if(firstRun)
             {
-                if(0 == sub.compareTo("INIT"))
+                if(sub.equals("INIT") || sub.equals("EXIT"))
                 {
                     firstRun = false;
                 }

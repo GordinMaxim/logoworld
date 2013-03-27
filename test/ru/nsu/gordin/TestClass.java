@@ -4,7 +4,6 @@ import org.junit.*;
 
 import ru.nsu.gordin.commands.*;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -22,7 +21,7 @@ public class TestClass {
         try {
             Model m = new Model();
             AbstractFactory fact = new AbstractFactory();
-            fact.init("./src/ru/nsu/gordin/initFile");
+            fact.init("ru/nsu/gordin/initFile.properties");
 
             Command command = fact.create("TELE#@@#PORT");
             Assert.assertEquals(null, command);
@@ -48,14 +47,7 @@ public class TestClass {
             command = fact.create("MOVE D D");
             Assert.assertEquals(null, command);
         }
-        catch (ClassNotFoundException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (InstantiationException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
     }

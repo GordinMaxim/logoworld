@@ -23,12 +23,7 @@ public class Model {
     private int x = -1;
     private int y = -1;
     private boolean drawing = false;
-    static private Logger log = null;
-    static
-    {
-        PropertyConfigurator.configure("log4j.properties");
-        log = Logger.getLogger(Model.class);
-    }
+    final static private Logger log = Logger.getLogger(Model.class);
 
     /**
      * Initialize field of the logoworld
@@ -101,7 +96,7 @@ public class Model {
      * make one step in a given direction
      *
      * @param direction direction in format [L|R|U|D]
-     * @return void
+     *
      */
     public void step(String direction)
     {
@@ -111,38 +106,36 @@ public class Model {
             field[x][y] = 'o';
 
         }
-//        else
-//        {
-//            field[x][y] = '.';
-//        }
-        if(0 == direction.compareTo("L"))
-        {
-            y--;
-            if(0 > y)
-            {
-                y += field[0].length;
-            }
-        }
-        else if(0 == direction.compareTo("R"))
-        {
-            y++;
-            y %= field[0].length;
-        }
-        else if(0 == direction.compareTo("U"))
-        {
-            x--;
-            if(0 > x)
-            {
-                x += field.length ;
-            }
-        }
-        else if(0 == direction.compareTo("D"))
-        {
-            x++;
-            x %= field.length;
-        }
-//        field[x][y] = 'X';
 
+        switch(CommandTypes.decoder(direction.charAt(0)))
+        {
+            case RIGHT:
+            {
+                y++;
+                y %= field[0].length;
+            }
+            case LEFT:
+            {
+                y--;
+                if(0 > y)
+                {
+                    y += field[0].length;
+                }
+            }
+            case UP:
+            {
+                x--;
+                if(0 > x)
+                {
+                    x += field.length ;
+                }
+            }
+            case DOWN:
+            {
+                x++;
+                x %= field.length;
+            }
+        }
     }
 
     /**

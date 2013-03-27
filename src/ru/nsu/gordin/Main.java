@@ -17,8 +17,23 @@ public class Main {
     {
         try
         {
+//            getClass().getPackage().getName().replace()
             PropertyConfigurator.configure("log4j.properties");
             Logger log = Logger.getLogger(Main.class);
+
+            String initFact = null;
+            if(0 == args.length)
+            {
+                initFact = "initFile.properties";
+            }
+            else if(1 == args.length)
+            {
+                initFact = args[0];
+            }
+            else
+            {
+                log.error("too many args");
+            }
 
             log.debug("DEBUUUUGGG");
 
@@ -26,7 +41,7 @@ public class Main {
             AbstractFactory factory = new AbstractFactory();
 
             log.info("factory init");
-            factory.init(args[0]);
+            factory.init(initFact);
 
             log.info("creating controller");
             Controller contrl = new Controller();
