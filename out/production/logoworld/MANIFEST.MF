@@ -1,2 +1,0 @@
-Main-class: ru.nsu.gordin.Main
-Class-Path: lib/log4j-1.2.16.jar lib/junit-4.9.jar lib/hamcrest-core-1.1.jar
