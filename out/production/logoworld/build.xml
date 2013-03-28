@@ -14,25 +14,46 @@
         <tstamp/>
         <!-- Create the build directory structure used by compile -->
         <mkdir dir="${build}"/>
-        <mkdir dir="${build}/production"/>
-        <mkdir dir="${build}/test"/>
 
     </target>
 
     <target name="compile" depends="init"
             description="compile the source " >
         <!-- Compile the java code from ${src} into ${build} -->
-        <javac srcdir="${src}" destdir="${build}/production" debug="true" classpath="${lib}/log4j-1.2.16.jar:${lib}hamcrest-core-1.1.jar:${lib}junit-4.9.jar"/>
-        <!--<javac srcdir="${test}" destdir="${build}/test" debug="true" classpath="${lib}/junit-4.9.jar"/>-->
+        <javac srcdir="${src}" destdir="${build}" debug="true" classpath="${lib}/log4j-1.2.16.jar:${lib}hamcrest-core-1.1.jar:${lib}/junit-4.9.jar"/>
+        <!--<javac srcdir="${test}" destdir="${build}/test" debug="true" sourcepath="${src}" classpath="${lib}/junit-4.9.jar:${lib}/log4j-1.2.16.jar" />-->
     </target>
 
-    <target name="dist" depends="compile"
+    <fileset id="resources" dir="${src}">
+        <include name="**/*.properties"/>
+    </fileset>
+    <fileset id="libraries" dir="${lib}">
+        <include name="*.jar"/>
+    </fileset>
+
+
+    <target name="copy resources" depends="compile">
+        <copy todir="${build}">
+            <fileset refid="resources"/>
+        </copy>
+        <mkdir dir="${build}/lib"/>
+        <copy todir="${build}/lib">
+            <fileset refid="libraries"/>
+        </copy>
+
+        <!--<copy file="${src}/ru/nsu/gordin/initFile.properties" tofile="${build}/ru/nsu/gordin/initFile.properties" />-->
+    </target>
+
+    <target name="dist" depends="copy resources"
             description="generate the distribution" >
         <!-- Create the distribution directory -->
-        <mkdir dir="${dist}/lib"/>
+        <!--<mkdir dir="${dist}/lib"/>-->
 
         <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
-        <jar jarfile="${dist}/lib/MyProject-${DSTAMP}.jar" basedir="${build}" manifest="${src}/MANIFEST.MF"/>
+        <jar jarfile="${dist}/MyProject-${DSTAMP}.jar"  basedir="${build}" manifest="${src}/MANIFEST.MF">
+            <!--<fileset refid="resources"/>-->
+            <!--<fileset refid="libraries"/>-->
+        </jar>
     </target>
 
     <target name="clean"
