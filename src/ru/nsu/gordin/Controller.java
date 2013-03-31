@@ -25,8 +25,8 @@ import java.io.InputStreamReader;
  */
 public class Controller {
     private boolean firstRun = true;
-    private AbstractFactory factory = null;
-    static private Logger log = Logger.getLogger(Controller.class);
+    private Factory factory = null;
+    final static private Logger log = Logger.getLogger(Controller.class);
     /**
      * method which run all game
      *
@@ -37,7 +37,7 @@ public class Controller {
      * @throws IllegalAccessException
      * @throws IOException
      */
-    void run(AbstractFactory fact, Viewer viewer) throws Exception {
+    void run(Factory fact, Viewer viewer) throws Exception {
         log.debug("void Controller.run(Abstract factory fact = "+fact+", Viewer viewer = "+viewer+")");
         factory = fact;
         Model model = new Model();

@@ -19,7 +19,7 @@ public class Main {
         {
 //            getClass().getPackage().getName().replace()
             PropertyConfigurator.configure("log4j.properties");
-            Logger log = Logger.getLogger(Main.class);
+            final Logger log = Logger.getLogger(Main.class);
 
             String initFact = null;
             if(0 == args.length)
@@ -38,7 +38,7 @@ public class Main {
             log.debug("DEBUUUUGGG");
 
             log.info("creating factory");
-            AbstractFactory factory = new AbstractFactory();
+            Factory factory = new Factory();
 
             log.info("factory init");
             factory.init(initFact);

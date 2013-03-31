@@ -24,10 +24,10 @@ import java.util.Properties;
  * @author Gordin Maxim
  * @version 1.0
  */
-public class AbstractFactory {
+public class Factory {
     private Map<String, String> paths = new HashMap<>();
-    private Map<String, Class> creators = new HashMap<>();
-    static private Logger log = Logger.getLogger(AbstractFactory.class);
+    private Map<String, Object> creators = new HashMap<>();
+    final static private Logger log = Logger.getLogger(Factory.class);
     /**
      * Initialized factory with settings in fileName
      *
@@ -71,10 +71,10 @@ public class AbstractFactory {
         }
         if(!creators.containsKey(key))
         {
-            creators.put(key, Class.forName(paths.get(key)));
+            creators.put(key, Class.forName(paths.get(key)).newInstance());
         }
 
-        return (Command)creators.get(key).newInstance();
+        return (Command)creators.get(key);
     }
 
 

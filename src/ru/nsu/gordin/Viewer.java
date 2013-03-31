@@ -18,7 +18,7 @@ import ru.nsu.gordin.Model;
  * @version 0.9
  */
 public class Viewer {
-    static private Logger log = Logger.getLogger(Viewer.class);
+    final static private Logger log = Logger.getLogger(Viewer.class);
     /**
      * print message on the screen
      *
